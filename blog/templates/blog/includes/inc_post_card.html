@@ -1,0 +1,19 @@
+{% load mediapath %}
+
+<div class="col-3">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <img src="{% mediapath object.image %}" alt="Картинка" width="200" height="200"/>
+            <h4 class="my-2 font-weight-normal">{{ object.title }}</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>{{ object.text }}</li>
+            </ul>
+
+            <p><a class="btn btn-secondary" href="{% url 'post_detail' object.slug %}" role="button">Посмотреть
+                &raquo</a></p>
+
+        </div>
+    </div>
+</div>
