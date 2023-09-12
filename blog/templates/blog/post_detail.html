@@ -32,9 +32,15 @@
                     </tr>
                     <tr>
                         <td>Теги</td>
-                        {% for tag in post.tags.all %}
-                            <td><a href="#">{{ tag.name }}</a></td>
-                        {% endfor %}
+                        <td>{% if post.tags.all %}</td>
+
+                               <td>Теги записи: {% for tag in post.tags.all %}</td>
+                                <td><a href="{% url 'post_by_tags' tag.slug %}">{{ tag }}</a>, {% endfor %}</td>
+
+                        <td>{% endif %}</td>
+                        {#                        {% for tag in post.tags.all %}#}
+                        {#                            <td><a href="#">{{ tag.name }}</a></td>#}
+                        {#                        {% endfor %}#}
                     </tr>
                     <tr>
                         <td>Автор</td>
@@ -62,7 +68,7 @@
                 {% endfor %}
         </div>
 
-            <div class="single-post">
+        <div class="single-post">
             <div class="widget__title">
                 <h4>Leave a comment</h4>
             </div>

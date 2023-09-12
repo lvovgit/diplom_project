@@ -1,0 +1,27 @@
+{% load mediapath %}
+{% load static %}
+{% block content %}
+<div class="container">
+      {% for post in posts %}
+        <div class="card">
+          <img src="{% mediapath object.image %}" alt="Картинка" width="200" height="200"/>
+          <h4 class="display-4">{{ post.title }}</h4>
+          <h4>{{ post.text }}</h4>
+          <span>{{ post.date|date:"d E Y в H:i" }}</span>
+        </div>
+      {% endfor %}
+</div>
+{% endblock %}
+{#  </div>#}
+{#     <div class="container">#}
+{#        {% if object_list %}#}
+{#            <div class="row text-center">#}
+{#                {% for object in object_list %}#}
+{#                    {% include 'blog/includes/inc_post_card.html' %}#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        {% else %}#}
+{#            <h3>Публикаций нет</h3>#}
+{#        {% endif %}#}
+{#    </div>#}
+

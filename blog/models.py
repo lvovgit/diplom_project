@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+from taggit.managers import TaggableManager
 
 from users.models import User
 
@@ -29,17 +30,17 @@ class Category(MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['name']
 
-class Tag(models.Model):
-    """Класс модели тегов"""
-    name = models.CharField(max_length=100, **NULLABLE)
-    slug = models.SlugField(max_length=100, **NULLABLE)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
+# class Tag(models.Model):
+#     """Класс модели тегов"""
+#     name = models.CharField(max_length=100, **NULLABLE)
+#     slug = models.SlugField(max_length=100, **NULLABLE)
+#
+#     def __str__(self):
+#         return self.name
+#
+#     class Meta:
+#         verbose_name = 'Тег'
+#         verbose_name_plural = 'Теги'
 
 
 class Post(models.Model):
@@ -54,11 +55,12 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
-    tags = models.ManyToManyField(Tag, related_name="post")
+    # tags = models.ManyToManyField(Tag, related_name="post")
     create_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', **NULLABLE)
     slug = models.SlugField(max_length=200, unique=True, **NULLABLE)
     published = models.BooleanField(verbose_name='признак публикации', default=True, **NULLABLE)
     view_count = models.PositiveIntegerField(verbose_name='количество просмотров', default=0)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
