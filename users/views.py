@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
 from django.views.generic import UpdateView, CreateView, TemplateView
 
-from diplom_medical_diagnostics import settings
+from core import settings
 from users.forms import UserForm
 from users.forms import UserForm, UserRegisterForm
 from users.models import User

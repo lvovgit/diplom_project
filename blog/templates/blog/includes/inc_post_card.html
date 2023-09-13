@@ -4,19 +4,23 @@
     <div class="card mb-4 box-shadow">
         <div class="card-header p-0 m-0">
             <img src="{% mediapath object.image %}" alt="Картинка" width="200" height="200"/>
-{#            <h4 class="my-2 font-weight-normal">{{ object.title }}</h4>#}
+
         </div>
         <div class="card-body">
-{#            <ul class="list-unstyled mt-3 mb-4 text-start m-3">#}
-                {{ object.text | truncatechars:30 }}
-{#            </ul>#}
-
+            <br><p class="text-uppercase">{{ object.title | truncatechars:30 }}</p></br>
+            <br>{{ object.text | truncatechars:30 }}</br>
 
 
         </div>
         <div class="card-footer">
-            <a class="btn btn-secondary" href="{% url 'post_detail' object.slug %}" role="button">Посмотреть
-                &raquo</a>
+            <tr>
+                <td><a class="btn btn-secondary" href="{% url 'post_detail' object.slug %}" role="button">View more&raquo</a></td>
+
+                       <br> <td>	&#128269;{{ object.view_count }}</td></br>
+
+
+                <br><td>&#9997;{{ object.get_comments.count }}</td></br>
+            </tr>
         </div>
     </div>
 </div>
@@ -28,5 +32,9 @@
     .card-body {
         max-height: 300px;
         overflow: hidden;
+    }
+    .card-footer {
+        height: 150px;
+
     }
 </style>

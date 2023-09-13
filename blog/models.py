@@ -71,17 +71,17 @@ class Post(models.Model):
     def get_comments(self):
         return self.comment.all()
 
-    class Meta:
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
-        ordering = ('create_at',)
-
-    def increase_view_count(self):
+    def increase_views(self):
         """
         Увеличивает просмотры поста на 1.
         """
         self.view_count += 1
         self.save()
+
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
+        ordering = ('create_at',)
 
 class Comment(models.Model):
     """Класс модели комментариев"""

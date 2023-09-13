@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, CreateView, ListView
 from taggit.models import Tag
 
@@ -19,20 +20,12 @@ class PostListView(ListView):
         return queryset
 
 
-def last_post(request):
-    posts = Post.objects.order_by("-create_at")[0:3]
-    response_data = {
-        'posts': posts,
-    }
-    return render(request, 'main/card_last_post.html', response_data)
-
-
-
 class PostCategoryListView(ListView):
     model = Post
 
     def get_queryset(self):
         return Post.objects.filter(category__slug=self.kwargs.get("slug")).select_related('category')
+
 class PostByTagListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'
@@ -58,6 +51,9 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
+        obj = self.get_object()
+        increase = get_object_or_404(Post, pk=obj.pk)
+        increase.increase_views()
         return context
 
 
@@ -72,3 +68,25 @@ class CreateComment(CreateView):
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()
+
+
+class PostSearchResultView(ListView):
+    """
+    Реализация поиска статей на сайте
+    """
+    model = Post
+    context_object_name = 'articles'
+    paginate_by = 10
+    allow_empty = True
+    template_name = 'blog/post_list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('do')
+        search_vector = SearchVector('full_description', weight='B') + SearchVector('title', weight='A')
+        search_query = SearchQuery(query)
+        return (self.model.objects.annotate(rank=SearchRank(search_vector, search_query)).filter(rank__gte=0.3).order_by('-rank'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Результаты поиска: {self.request.GET.get("do")}'
+        return context

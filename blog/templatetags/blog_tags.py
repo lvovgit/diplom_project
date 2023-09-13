@@ -21,7 +21,7 @@ def get_all_categories():
 @register.simple_tag()
 def popular_tags():
     """Вывод списка популярных тегов"""
-    tags = Tag.objects.annotate(num_times=Count('article')).order_by('-num_times')
+    tags = Tag.objects.annotate(num_times=Count('post')).order_by('-num_times')
     tag_list = list(tags.values('name', 'num_times', 'slug'))
     return tag_list
 
