@@ -1,7 +1,6 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
-from main.views import FeedbackCreateView
 from users.apps import UsersConfig
 from users.views import *
 
@@ -17,4 +16,4 @@ urlpatterns = [
     path('email-confirmed/', EmailConfirmedView.as_view(), name='email_confirmed'),
     path('confirm-email-failed/', EmailConfirmationFailedView.as_view(), name='email_confirmation_failed'),
 
-    ]
+]

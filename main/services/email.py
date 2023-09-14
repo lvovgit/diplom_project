@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 def send_contact_email_message(subject, email, content, user_id):
     """
-    Function to send contact form email
+    Функция отправки фидбэка
     """
     user = User.objects.get(id=user_id) if user_id else None
     message = render_to_string('main/email/feedback_email_send.html', {
@@ -21,5 +21,3 @@ def send_contact_email_message(subject, email, content, user_id):
         recipient_list=['lionheartbow@yandex.ru'],
         fail_silently=False
     )
-    # email = EmailMessage(subject, message, settings.EMAIL_HOST_, settings.EMAIL_HOST_USER,)
-    # email.send(fail_silently=False)

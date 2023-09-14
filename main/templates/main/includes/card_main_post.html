@@ -1,0 +1,14 @@
+{% load mediapath %}
+{% load static %}
+<div class="d-flex flex-column main__post">
+    <h3>{{ post.title }}</h3>
+    <div class="d-flex flex-row">
+        <img src="{% mediapath post.image %}" alt="Prev" width="200" height="200">
+        <p>
+            {{ post.text }}
+        </p>
+    </div>
+    <div>
+        {{ post.create_at }} / {{ post.view_count }} / {{ post.slug }}
+    </div>
+</div>

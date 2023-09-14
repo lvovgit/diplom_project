@@ -1,21 +1,21 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h4 class="display-4">Все публикации</h4>
-    </div>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h3>Все публикации</h3>
+</div>
 
 
+<div class="container">
 
-    <div class="container">
+    <div class="row text-center">
         {% if object_list %}
-            <div class="row text-center">
-                {% for object in object_list %}
-                    {% include 'blog/includes/inc_post_card.html' %}
-                {% endfor %}
-            </div>
-        {% else %}
-            <h3>Публикаций нет</h3>
-        {% endif %}
+        {% for object in object_list %}
+        {% include 'blog/includes/inc_post_card.html' %}
+        {% endfor %}
     </div>
+    {% else %}
+    <h3>Публикаций нет</h3>
+    {% endif %}
+</div>
 {% endblock %}

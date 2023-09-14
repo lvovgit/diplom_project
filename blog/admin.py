@@ -2,14 +2,13 @@ from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 
 from blog import models
-# Register your models here.
 from blog.models import Post
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ["title", "category", "author", "create_at", "id"]
-    # search_fields = ('name', 'description',)
+    search_fields = ('name', 'description',)
     list_filter = ('create_at',)
     prepopulated_fields = {"slug": ("title",)}
     save_as = True
@@ -22,4 +21,3 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Category, MPTTModelAdmin)
-

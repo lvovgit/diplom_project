@@ -1,11 +1,8 @@
 from django import forms
-from django.forms import Textarea
-
 from main.models import Feedback
 
 
 class FormStyleMixin:
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

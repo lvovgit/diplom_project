@@ -130,3 +130,28 @@ h1, h2, h3, h4, h5, h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+.main__post img{
+  width: 200px;
+  height: 200px;
+}
+.main__post p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  height: 190px;
+  /*height: 1.2em;*/
+  /*white-space: nowrap;*/
+}
+.other__post img{
+  width: 75px;
+  height: 75px;
+}
+.other__post p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  height: 75px;
+  /*height: 1.2em;*/
+  /*white-space: nowrap;*/
+}

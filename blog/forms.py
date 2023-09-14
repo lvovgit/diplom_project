@@ -3,6 +3,8 @@ from .models import Comment
 
 
 class CommentForm(forms.ModelForm):
+    """Форма комментирования поста"""
+
     class Meta:
         model = Comment
         exclude = ['create_at', 'post']

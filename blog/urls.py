@@ -1,10 +1,5 @@
 from django.urls import path
-
 from . import views
-from .views import PostSearchResultView
-
-# from django.views.decorators.cache import cache_page
-
 
 urlpatterns = [
     path('comment/<int:pk>/', views.CreateComment.as_view(), name="create_comment"),
@@ -12,9 +7,5 @@ urlpatterns = [
     path('<slug:slug>/', views.PostCategoryListView.as_view(), name="post_category_list"),
     path('posts/tags/<str:tag>/', views.PostByTagListView.as_view(), name='post_by_tags'),
     path('', views.PostListView.as_view(), name="post_list"),
-    path('search/', PostSearchResultView.as_view(), name='search'),
-
-
-    # # path('', cache_page(60 * 15)(views.HomeView.as_view()), name="home"),
 
 ]

@@ -1,7 +1,17 @@
 {% load blog_tags %}
-<ul>
-  {% get_list_category as list_category %}
-  {% for node in list_category %}
-    <li><a href="{% url 'post_category_list' node.slug %}">{{ node.name }}</a></li>
-  {% endfor %}
-</ul>
+{% get_list_category as list_category %}
+<div class="card">
+    <div class="card-header">
+        Категории
+    </div>
+    <div class="card-body">
+        <ul>
+            {% for node in list_category %}
+            <li>
+                <a href="{% url 'post_category_list' node.slug %}">{{ node.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+

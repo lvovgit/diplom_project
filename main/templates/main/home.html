@@ -3,71 +3,49 @@
 {% load static %}
 {% block content %}
 
-<body>
-
 <div class="container">
+    <div class="col-4 ">
+        {% if user.is_authenticated %}
+        {% else %}
+        <div class="divider"></div>
+        <div>Форма подписки</div>
+        <a class="text-muted" href="{% url 'users:register' %}">Subscribe</a>
+        {% endif %}
+    </div>
+    <h2 class="w-100 text-dark text-center text-capitalize">Medical blog</h2>
 
-    <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
+    <hr class="dropdown-divider">
+    <div>
+        {% include 'main/tag_bar.html' %}
+    </div>
+    <hr class="dropdown-divider">
+    <div class="d-flex justify-content-between align-items-stretch">
+        <div class="w-50 flex-fill">
+            {% include 'main/includes/card_main_post.html' with post=main_post %}
 
-            <div class="col-4 pt-1">
-                {% if user.is_authenticated %}
-                {% else %}
-                <a class="text-muted" href="{% url 'users:register' %}">Subscribe</a>
-                 {% endif %}
-            </div>
 
-            <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark">Medical blog</a>
-            </div>
-            <div class="col-4 d-flex justify-content-end align-items-center">
-                {% if user.is_authenticated %}
-
-                <a class="p-2 btn btn-outline-primary" href="{% url 'users:logout' %}">Logout</a>
-                {% else %}
-
-                <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Sign in</a>
-                {% endif %}
-            </div>
+            <div class="divider"></div>
+            {% for m_post in main_posts %}
+            {% include 'main/includes/card_other_posts.html' with post=m_post %}
+            {% endfor %}
         </div>
-        <div class="row">
-
-            <div class="col">
-                {% include 'main/tag_bar.html' %}
-            </div>
-
+        <div class="divider"></div>
+        <div class="flex-fill other_news w-25">
+            {% for o_post in other_posts %}
+            {% include 'main/includes/card_other_posts.html' with post=o_post %}
+            {% endfor %}
         </div>
-    </header>
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                {% for object in post_list %}
-                {% include 'main/includes/card_last_post.html' %}
-                {% endfor %}
-            </div>
-
-
-            <div class="col-4">
-                <div class="card">
-                    {% include 'main/sidebar_category.html' %}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                {% for object in post_list_2 %}
-                {% include 'main/includes/card_last_post.html' %}
-                {% endfor %}
-            </div>
-
-
+        <div class="divider"></div>
+        <div class="flex-fill">
+            {% include 'main/sidebar_category.html' %}
         </div>
     </div>
 </div>
 
-
-</body>
-
+<style>
+    .divider {
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        margin: 0.25rem;
+    }
+</style>
 {% endblock %}

@@ -1,38 +1,21 @@
-import random
-
 from django.contrib.auth import login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
-from django.views.generic import UpdateView, CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView
 
 from core import settings
-from users.forms import UserForm
-from users.forms import UserForm, UserRegisterForm
+
+from users.forms import UserRegisterForm
 from users.models import User
-#
-#
-# class ProfileUpdateView(LoginRequiredMixin, UpdateView):
-#     model = User
-#     form_class = UserForm
-#     success_url = reverse_lazy('users:profile')
-#     template_name = 'users/user_register.html'
-#
-#     def get_object(self, queryset=None):
-#         return self.request.user
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = f'Страница пользователя: {self.object.email}'
-#         return context
-#
-#
+
+
 class UserRegisterView(CreateView):
+    """Реализация регистрации пользователя"""
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('users:login')
@@ -58,10 +41,11 @@ class UserRegisterView(CreateView):
             fail_silently=False
         )
         return redirect('users:email_confirmation_sent')
-        # super().form_valid(form)
 
 
 class UserConfirmEmailView(View):
+    """Реализация подтверждения регистрации пользователя через email"""
+
     def get(self, request, uidb64, token):
         try:
             uid = urlsafe_base64_decode(uidb64)
@@ -79,6 +63,7 @@ class UserConfirmEmailView(View):
 
 
 class EmailConfirmationSentView(TemplateView):
+    """Реализация отправки email подтверждения регистрации пользователя"""
     template_name = 'users/email_confirmation_sent.html'
 
     def get_context_data(self, **kwargs):
@@ -88,6 +73,7 @@ class EmailConfirmationSentView(TemplateView):
 
 
 class EmailConfirmedView(TemplateView):
+    """Реализация вида подтверждения регистрации пользователя"""
     template_name = 'users/email_confirmed.html'
 
     def get_context_data(self, **kwargs):
@@ -97,42 +83,10 @@ class EmailConfirmedView(TemplateView):
 
 
 class EmailConfirmationFailedView(TemplateView):
+    """Реализация вида неуспешной регистрации пользователя"""
     template_name = 'users/email_confirmation_failed.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Ваш электронный адрес не активирован'
         return context
-
-
-# def generate_new_password(request, email=None):
-#     if not email:
-#         email = request.user.email
-#     new_password = ''.join([str(random.randint(0, 9)) for _ in range(12)])
-#
-#     send_mail(
-#         subject='Вы сменили пароль',
-#         message=f'Ваш новый сгенерированный пароль: {new_password}',
-#         from_email=settings.EMAIL_HOST_USER,
-#         recipient_list=[email],
-#         fail_silently=False
-#     )
-#     # print(request.user.email)
-#     # print(request.user)
-#     # print(request.user.id)
-#     # print(request.user.__dict__)
-#     user = User.objects.filter(email=email).first()
-#
-#     user.set_password(new_password)
-#     user.save()
-#     return redirect(reverse('users:login'))
-#     # request.user.set_password(new_password)
-#     # request.user.save()
-#     # return redirect(reverse('users:login'))
-#
-#
-# def backup_pass(request):
-#         if request.method == "POST":
-#             email = request.POST.get('email')
-#             generate_new_password(request, email=email)
-#         return render(request, 'users/backup_pass.html')
