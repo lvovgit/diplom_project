@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main.models import Feedback
+
 from users.models import User
 
 
