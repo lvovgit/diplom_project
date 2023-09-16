@@ -1,17 +1,24 @@
 {% load blog_tags %}
+{% load mptt_tags %}
 {% get_list_category as list_category %}
 <div class="card">
     <div class="card-header">
         Категории
     </div>
+    {% full_tree_for_model blog.Category as categories %}
     <div class="card-body">
-        <ul>
-            {% for node in list_category %}
-            <li>
-                <a href="{% url 'post_category_list' node.slug %}">{{ node.name }}</a>
-            </li>
-            {% endfor %}
+         <ul>
+            {% recursetree categories %}
+                <li>
+                 <a href="{% url 'post_category_list' node.slug %}">{{ node.name }}</a>
+                </li>
+
+                {% if not node.is_leaf_node %}<ul>{% endif %}
+                    {{children}}
+                {% if not node.is_leaf_node %}</ul>{% endif %}
+            {% endrecursetree %}
         </ul>
+      </div>
     </div>
-</div>
+
 
