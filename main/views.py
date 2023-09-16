@@ -33,8 +33,6 @@ class FeedbackCreateView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         if form.is_valid():
             feedback = form.save(commit=False)
-            # if self.request.user.is_authenticated:
-            #     feedback.user = self.request.user
             send_contact_email_message(feedback.subject, feedback.email, feedback.content, feedback.user_id, )
         return super().form_valid(form)
 

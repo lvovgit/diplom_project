@@ -2,7 +2,7 @@ from django import template
 from django.db.models import Count
 from taggit.models import Tag
 
-from blog.models import Category, Post
+from blog.models import Category
 
 register = template.Library()
 
