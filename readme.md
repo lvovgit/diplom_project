@@ -58,9 +58,11 @@
       - python manage.py runserver
    Команда для Unix:
       - python3 manage.py runserver
-
-9. Доступ к сайту осуществляется по IP-адресу: http://127.0.0.1:8000/  
-10. Доступ к административной панели: http://127.0.0.1:8000/admin/
+8. Для запуска celery:
+   1- celery -A config worker -l info
+   2- celery -A core beat -l INFO     
+10. Доступ к сайту осуществляется по IP-адресу: http://127.0.0.1:8000/  
+11. Доступ к административной панели: http://127.0.0.1:8000/admin/
 
 
 
